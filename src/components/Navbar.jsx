@@ -6,15 +6,14 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const links = [
-    { name: "Bosh sahifa", path: "/" },
     { name: "Mashqlar", path: "/fitness" },
     { name: "Ovqatlanish", path: "/nutrition" },
     { name: "Ruhiy salomatlik", path: "/mental" },
     { name: "Blog", path: "/blog" },
-    { name: "BMI", path: "/bmi" },
-    { name: "Suv Tracker", path: "/water" },
+    { name: "Hisoblash", path: "/bmi" },
+    { name: "Suv nazorati", path: "/water" },
     { name: "Rejalar", path: "/planner" },
-    { name: "Kaloriya", path: "/calorie" },
+    { name: "Energiya", path: "/calorie" },
   ];
 
   return (
@@ -66,7 +65,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="flex flex-col px-6 pb-4 gap-4 bg-gradient-to-r from-green-600/70 via-green-500/50 to-green-700/70 backdrop-blur-md shadow-lg md:hidden"
+            className="grid grid-cols-2 px-6 pb-4 gap-2 border-t-2 pt-4 "
           >
             {links.map((link, i) => (
               <li key={i}>
@@ -74,7 +73,7 @@ export default function Navbar() {
                   to={link.path}
                   onClick={() => setMenuOpen(false)} // bosilganda menyu yopilsin
                   className={({ isActive }) =>
-                    `block text-white/90 font-medium tracking-wide transition-all duration-300 hover:text-white hover:scale-105 ${
+                    `block text-white/90 font-medium tracking-wide transition-all duration-300 hover:text-white hover:scale-105 border p-0.5 rounded ${
                       isActive ? "text-white font-bold" : ""
                     }`
                   }

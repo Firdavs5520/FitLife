@@ -3,14 +3,14 @@ import PageWrapper from "../components/PageWrapper";
 
 export default function Fitness() {
   const workouts = {
-    Ertalab: [
+    Ertalabki: [
       "15 daqiqa yugurish",
       "Push-up 10–20 marta",
       "Plank 30–60 soniya",
       "Jumping Jacks 3x50",
       "Mountain Climbers 3x30s",
     ],
-    TushlikdanKeyin: [
+    Yengil: [
       "Lunges 3x15",
       "Sit-ups 3x20",
       "Bicep Curls 3x15",
@@ -62,7 +62,7 @@ export default function Fitness() {
               <button
                 key={type}
                 onClick={() => handleWorkoutSelect(type)}
-                className="px-6 py-3 font-semibold text-white transition bg-green-500 rounded-lg shadow-md hover:bg-green-600 hover:scale-105"
+                className="px-4 py-3 font-semibold text-white transition bg-green-500 rounded-lg shadow-md hover:bg-green-600 hover:scale-105"
               >
                 {type}
               </button>

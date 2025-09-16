@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
+import { useTypewriter, Cursor } from "react-simple-typewriter";
 
 export default function Home() {
   // Motivation texts
@@ -38,6 +39,19 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [motivations.length]);
 
+  // Typewriter matnlar
+  const [text] = useTypewriter({
+    words: [
+      "Salomatlik Portaliga Xush Kelibsiz",
+      "Sog‘lom Hayot — Baxt Kaliti",
+      "Bugun boshlang, ertaga kech bo‘lishi mumkin",
+    ],
+    loop: true,
+    typeSpeed: 150,
+    deleteSpeed: 60,
+    delaySpeed: 1000, // 7 sekund tursin
+  });
+
   return (
     <div className="relative overflow-hidden bg-gradient-to-r from-green-200 via-blue-100 to-purple-200 py-20 min-h-screen">
       {/* Background animated blobs */}
@@ -65,12 +79,28 @@ export default function Home() {
         className="relative z-10 space-y-6 text-center"
       >
         <h1 className="text-4xl font-extrabold text-green-700 md:text-5xl drop-shadow-lg">
-          Salomatlik Portaliga Xush Kelibsiz
+          {text}
+          <Cursor cursorStyle="_" />
         </h1>
-        <p className="max-w-3xl mx-auto text-lg md:text-xl text-gray-800/90">
-          Bu portal sog‘lom turmush tarzi, to‘g‘ri ovqatlanish va ruhiy
-          salomatlikni rivojlantirishga yordam beradi.
-        </p>
+        <motion.div
+          className="relative z-10 max-w-3xl p-8 mx-auto t shadow-2xl rounded-2xl bg-white/40 backdrop-blur-lg border border-white/30"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={currentMotivation}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.8 }}
+              className="text-2xl font-medium text-center text-gray-800 drop-shadow-2xl"
+            >
+              {motivations[currentMotivation]}
+            </motion.p>
+          </AnimatePresence>
+        </motion.div>
       </motion.div>
 
       {/* Muammo */}
@@ -80,10 +110,10 @@ export default function Home() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="mb-4 text-3xl font-bold text-center text-red-600">
+        <h2 className="mb-4 text-3xl font-bold text-center text-red-600 drop-shadow-md">
           ⚠️ Muammo
         </h2>
-        <p className="text-lg text-gray-800 text-center">
+        <p className="text-lg text-gray-800 text-center drop-shadow-lg">
           Hozirgi kunda ko‘plab insonlar stress, noto‘g‘ri ovqatlanish va
           yetarli jismoniy faollik yo‘qligi tufayli sog‘lig‘ini yo‘qotmoqda.
         </p>
@@ -96,10 +126,10 @@ export default function Home() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9 }}
       >
-        <h2 className="mb-4 text-3xl font-bold text-center text-green-700">
+        <h2 className="mb-4 text-3xl font-bold text-center text-green-700 drop-shadow-md">
           💡 Bizning Yechim
         </h2>
-        <p className="text-lg text-gray-800 text-center">
+        <p className="text-lg text-gray-800 text-center drop-shadow-lg">
           Portalimiz orqali siz sog‘lom turmush tarzini shakllantirish,
           motivatsiya olish va hayotingizni ijobiy tomonga o‘zgartirish uchun
           barcha imkoniyatlarga ega bo‘lasiz.
@@ -107,43 +137,8 @@ export default function Home() {
       </motion.div>
 
       {/* Challenge & Motivation */}
-      <motion.div
-        className="relative z-10 max-w-2xl p-8 mx-auto mt-16 shadow-2xl rounded-2xl bg-white/40 backdrop-blur-lg border border-white/30"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6 }}
-      >
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={currentMotivation}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.8 }}
-            className="text-xl font-medium text-center text-gray-800"
-          >
-            {motivations[currentMotivation]}
-          </motion.p>
-        </AnimatePresence>
-      </motion.div>
 
       {/* CTA Button */}
-      <NavLink to={"/bmi"}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
-          className="relative z-10 text-center"
-        >
-          <motion.button
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 mt-12 font-bold text-white bg-green-500 rounded-full shadow-lg"
-          >
-            BMI Kalkulyatorini sinab ko‘ring
-          </motion.button>
-        </motion.div>
-      </NavLink>
     </div>
   );
 }

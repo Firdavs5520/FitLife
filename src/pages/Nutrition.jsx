@@ -47,7 +47,7 @@ export default function Nutrition() {
   ];
 
   return (
-    <div className="py-6  ">
+    <div className="pt-4  ">
       <PageWrapper title="🥗 Sog‘lom Ovqatlanish">
         <div className=" p-4  flex flex-col gap-4">
           {weeklyMeals.map((day, idx) => (

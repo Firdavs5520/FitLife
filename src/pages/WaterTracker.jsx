@@ -34,16 +34,6 @@ export default function WaterTracker() {
   }, []);
 
   // Motivatsion xabarlar
-  const messages = [
-    "Shoshilmang, yana bir stakan iching 🚰",
-    "Ajoyib! Siz hozirgacha yaxshi ishladingiz 💧",
-    "Siz maqsadga yetdingiz! 🎉",
-  ];
-
-  let message = messages[0];
-  if (cups === 0) message = messages[0];
-  else if (cups < dailyGoal) message = messages[1];
-  else message = messages[2];
 
   return (
     <PageWrapper title="💧 Suv ichish kuzatuvchisi">
@@ -69,18 +59,6 @@ export default function WaterTracker() {
         </div>
 
         {/* Motivatsion Xabar */}
-        <AnimatePresence>
-          <motion.div
-            key={cups}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.5 }}
-            className="mt-4 text-white font-medium text-sm md:text-base"
-          >
-            {message}
-          </motion.div>
-        </AnimatePresence>
       </div>
 
       {/* Buttons */}
@@ -89,7 +67,7 @@ export default function WaterTracker() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setCups(cups + 1)}
-          className="w-full md:w-1/3 btn btn-info"
+          className="w-full md:w-1/3 btn btn-info  p-0.5 rounded drop-shadow-xl text-white bg-green-500"
         >
           1 stakan qo‘shish
         </motion.button>
@@ -98,9 +76,9 @@ export default function WaterTracker() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setCups(0)}
-          className="w-full md:w-1/3 btn btn-warning"
+          className="w-full md:w-1/3 btn btn-warning  p-0.5 rounded drop-shadow-xl text-white bg-red-500"
         >
-          Reset
+          Boshidan boshlash
         </motion.button>
       </div>
 

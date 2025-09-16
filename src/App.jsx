@@ -10,12 +10,11 @@ import Bmi from "./pages/Bmi";
 import WaterTracker from "./pages/WaterTracker";
 import Planner from "./pages/Planner";
 import CalorieTracker from "./pages/CalorieTracker";
-import HealthNotifications from "./components/HealthNotifications";
 
 function App() {
   return (
     <Router>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen font-golos">
         <Navbar />
         <main className=" ">
           <Routes>

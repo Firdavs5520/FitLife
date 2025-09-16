@@ -82,12 +82,12 @@ export default function Mental() {
           {/* Stress Survey */}
           <div className="p-4 rounded-lg shadow-lg bg-blue-700/50 backdrop-blur-md">
             <h3 className="mb-2 font-semibold">Stress darajangizni baholang</h3>
-            <div className="flex gap-2">
+            <div className="flex gap-[4px] sm:gap-2">
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                 <button
                   key={num}
                   onClick={() => handleStressSurvey(num)}
-                  className="px-2 py-1 font-semibold text-white bg-purple-500 rounded hover:bg-purple-600"
+                  className="px-2 py-1 font-semibold text-white bg-purple-500 rounded hover:bg-purple-600 text-sm sm:text-base"
                 >
                   {num}
                 </button>
