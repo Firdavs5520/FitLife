@@ -33,7 +33,7 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-4 left-0 z-50 w-full backdrop-blur-lg  ">
-      <div className="max-w-3xl mx-auto flex items-center justify-between px-6 py-3 relative border rounded-lg shadow-2xl rounded-2xl bg-gray-800/80 backdrop-blur-lg border border-gray-700">
+      <div className="max-w-3xl mx-auto flex items-center justify-between px-6 py-3 relative rounded-lg shadow-2xl  bg-gray-800/80 backdrop-blur-lg border border-gray-700">
         {/* Logo */}
         <Link
           to="/"
