@@ -56,7 +56,6 @@ function Bmi() {
     setStatus(newStatus);
     setAdvice(newAdvice);
 
-    // Tarixga qo‘shish
     const date = new Date().toLocaleDateString();
     const newEntry = { date, bmi: parseFloat(result) };
     const updatedHistory = [...history, newEntry];
@@ -70,26 +69,26 @@ function Bmi() {
   };
 
   return (
-    <PageWrapper title="BMI Kalkulyatori" className="text-green-700">
+    <PageWrapper title="BMI Kalkulyatori">
       <div className="mb-4">
-        <label>Bo‘yingiz (sm)</label>
+        <label className="text-white font-semibold">Bo‘yingiz (sm)</label>
         <input
           type="number"
           value={height}
           onChange={(e) => setHeight(e.target.value)}
           placeholder="Masalan: 170"
-          className="w-full mt-2 p-3 rounded-xl bg-white/30 backdrop-blur-md border-2 focus:ring-green-400 transition"
+          className="w-full mt-2 p-3 rounded-xl bg-gray-900/50 backdrop-blur-md border border-gray-700 text-white focus:ring-gray-400 transition"
         />
       </div>
 
       <div className="mb-6">
-        <label>Vazningiz (kg)</label>
+        <label className="text-white font-semibold">Vazningiz (kg)</label>
         <input
           type="number"
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
           placeholder="Masalan: 65"
-          className="w-full mt-2 p-3 rounded-xl bg-white/30 backdrop-blur-md border-2 focus:ring-green-400 transition"
+          className="w-full mt-2 p-3 rounded-xl bg-gray-900/50 backdrop-blur-md border border-gray-700 text-white focus:ring-gray-400 transition"
         />
       </div>
 
@@ -97,45 +96,52 @@ function Bmi() {
         onClick={calculateBmi}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="w-full py-3 mb-4 font-bold text-white bg-gradient-to-r from-green-500 to-blue-500 rounded-xl shadow-lg"
+        className="w-full py-3 mb-4 font-bold text-white bg-gray-800 rounded-xl shadow-lg hover:bg-gray-700"
       >
         Hisoblash
       </motion.button>
 
       {bmi && (
-        <div className="p-6 mb-4 rounded-2xl bg-white/30 backdrop-blur-md shadow-lg border-2 border-gradient-to-r from-purple-400 to-pink-400">
+        <div className="p-6 mb-4 rounded-2xl bg-gray-900/60 backdrop-blur-md shadow-lg border border-gray-700">
           <div className="flex justify-between items-center mb-2">
-            <p className="text-xl font-bold">
-              Sizning BMI: <span className="text-green-700">{bmi}</span>
+            <p className="text-xl font-bold text-white">
+              Sizning BMI: <span className="text-gray-300">{bmi}</span>
             </p>
-            <p className="font-semibold">{status}</p>
+            <p className="font-semibold text-gray-200">{status}</p>
           </div>
-          <p className="mb-2 text-gray-800">{advice}</p>
+          <p className="mb-2 text-gray-300">{advice}</p>
         </div>
       )}
 
       {history.length > 0 && (
-        <div className="p-4 rounded-xl bg-white/20 backdrop-blur-md shadow-lg">
+        <div className="p-4 rounded-xl bg-gray-900/40 backdrop-blur-md shadow-lg border border-gray-700">
           <div className="flex justify-between mb-2">
-            <h3 className="font-bold text-green-700">BMI Tarixi</h3>
+            <h3 className="font-bold text-white">BMI Tarixi</h3>
             <button
               onClick={clearHistory}
-              className="px-2 py-1 text-sm bg-red-500/70 rounded-md text-white hover:bg-red-600/80"
+              className="px-2 py-1 text-sm bg-gray-700/70 rounded-md text-white hover:bg-gray-600/80"
             >
               Tozalash
             </button>
           </div>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={history}>
-              <XAxis dataKey="date" />
-              <YAxis domain={[0, 40]} />
-              <Tooltip />
+              <XAxis dataKey="date" stroke="#ccc" />
+              <YAxis domain={[0, 40]} stroke="#ccc" />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#1f1f1f",
+                  borderRadius: "8px",
+                  border: "1px solid #555",
+                }}
+                itemStyle={{ color: "#fff" }}
+              />
               <Line
                 type="monotone"
                 dataKey="bmi"
-                stroke="#4ade80"
+                stroke="#fff"
                 strokeWidth={3}
-                dot={{ r: 4 }}
+                dot={{ r: 4, fill: "#fff" }}
               />
             </LineChart>
           </ResponsiveContainer>

@@ -41,19 +41,19 @@ export default function Blog() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 * index }}
-            whileHover={{ scale: 1.05 }}
-            className="p-5 bg-white/30 backdrop-blur-md rounded-2xl shadow-lg cursor-pointer"
+            whileHover={{ scale: 1.03 }}
+            className="p-5 bg-gray-800/50 backdrop-blur-md rounded-2xl shadow-lg cursor-pointer border border-gray-700"
           >
-            <h2 className="mb-2 text-xl font-bold text-green-700">
+            <h2 className="mb-2 text-xl font-bold text-white drop-shadow-md">
               {post.title}
             </h2>
-            <span className="text-sm font-semibold text-blue-700">
+            <span className="text-sm font-semibold text-gray-300">
               {post.category}
             </span>
-            <p className="mt-2 text-gray-700 line-clamp-3">{post.content}</p>
+            <p className="mt-2 text-gray-200 line-clamp-3">{post.content}</p>
             <button
               onClick={() => setSelectedPost(post)}
-              className="px-4 py-2 mt-3 text-white transition bg-green-500 rounded-lg hover:bg-green-600"
+              className="px-4 py-2 mt-3 text-white transition bg-gray-700 rounded-lg hover:bg-gray-600"
             >
               Batafsil o‘qish
             </button>
@@ -68,24 +68,24 @@ export default function Blog() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
           >
             <motion.div
-              initial={{ scale: 0.8 }}
+              initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              className="p-6 bg-white/90 backdrop-blur-md rounded-2xl max-w-lg mx-4 shadow-xl"
+              exit={{ scale: 0.9 }}
+              className="p-6 bg-gray-900/95 backdrop-blur-md rounded-2xl max-w-lg mx-4 shadow-xl border border-gray-700"
             >
-              <h2 className="mb-2 text-2xl font-bold text-green-700">
+              <h2 className="mb-2 text-2xl font-bold text-white drop-shadow-md">
                 {selectedPost.title}
               </h2>
-              <span className="text-sm font-semibold text-blue-700">
+              <span className="text-sm font-semibold text-gray-300">
                 {selectedPost.category}
               </span>
-              <p className="mt-4 text-gray-700">{selectedPost.content}</p>
+              <p className="mt-4 text-gray-200">{selectedPost.content}</p>
               <button
                 onClick={() => setSelectedPost(null)}
-                className="px-4 py-2 mt-6 text-white bg-red-500 rounded-lg hover:bg-red-600"
+                className="px-4 py-2 mt-6 text-white bg-gray-700 rounded-lg hover:bg-gray-600"
               >
                 ✖ Yopish
               </button>

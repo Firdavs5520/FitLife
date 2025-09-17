@@ -6,19 +6,34 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const links = [
-    { name: "Mashqlar", path: "/fitness" },
-    { name: "Ovqatlanish", path: "/nutrition" },
-    { name: "Ruhiy salomatlik", path: "/mental" },
-    { name: "Blog", path: "/blog" },
-    { name: "Hisoblash", path: "/bmi" },
-    { name: "Suv nazorati", path: "/water" },
-    { name: "Rejalar", path: "/planner" },
-    { name: "Energiya", path: "/calorie" },
+    { name: "🏋️ Mashqlar", path: "/fitness" },
+    { name: "🥗 Ovqatlanish", path: "/nutrition" },
+    { name: "🧘 Ruhiy salomatlik", path: "/mental" },
+    { name: "📰 Blog", path: "/blog" },
+    { name: "📊 Hisoblash", path: "/bmi" },
+    { name: "💧 Suv nazorati", path: "/water" },
+    { name: "📅 Rejalar", path: "/planner" },
+    { name: "⚡ Energiya", path: "/calorie" },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3, staggerChildren: 0.1 },
+    },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.2 } },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <nav className="fixed top-0 left-0 z-50 w-full bg-gradient-to-r from-green-600/70 via-green-500/50 to-green-700/70 backdrop-blur-md shadow-lg">
-      <div className="container flex items-center justify-between px-6 py-3 mx-auto">
+    <nav className="fixed top-4 left-0 z-50 w-full backdrop-blur-lg  ">
+      <div className="max-w-3xl mx-auto flex items-center justify-between px-6 py-3 relative border rounded-lg shadow-2xl rounded-2xl bg-gray-800/80 backdrop-blur-lg border border-gray-700">
         {/* Logo */}
         <Link
           to="/"
@@ -27,64 +42,47 @@ export default function Navbar() {
           FitLife
         </Link>
 
-        {/* Desktop Links */}
-        <ul className="hidden md:flex gap-6">
-          {links.map((link, i) => (
-            <li key={i}>
-              <NavLink
-                to={link.path}
-                className={({ isActive }) =>
-                  `relative text-white/90 font-medium tracking-wide transition-all duration-300 hover:text-white hover:scale-105 ${
-                    isActive
-                      ? "text-white after:absolute after:w-full after:h-[2px] after:bg-white after:bottom-[-6px] after:left-0 after:rounded-lg after:animate-pulse"
-                      : ""
-                  }`
-                }
-              >
-                {link.name}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+        {/* Hamburger */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="text-2xl text-white transition hover:scale-110"
+        >
+          {menuOpen ? "✖" : "☰"}
+        </button>
 
-        {/* Mobile Hamburger */}
-        <div className="md:hidden">
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="text-2xl text-white transition hover:scale-110"
-          >
-            {menuOpen ? "✖" : "☰"}
-          </button>
-        </div>
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.ul
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="absolute top-20 left-0 w-full grid grid-cols-2 gap-4 px-6 py-6 shadow-2xl rounded-2xl bg-gray-800/95"
+            >
+              {links.map((link, i) => (
+                <motion.li key={i} variants={itemVariants}>
+                  <NavLink
+                    to={link.path}
+                    onClick={() => setMenuOpen(false)}
+                    className={({ isActive }) =>
+                      `flex items-center justify-center p-3 rounded-xl font-semibold tracking-wide text-white shadow-md transition-all duration-300 
+                      hover:scale-105 hover:shadow-lg hover:bg-gray-700/50
+                      ${
+                        isActive
+                          ? "bg-gray-700/50 border border-gray-600"
+                          : "bg-gray-800/50"
+                      }`
+                    }
+                  >
+                    {link.name}
+                  </NavLink>
+                </motion.li>
+              ))}
+            </motion.ul>
+          )}
+        </AnimatePresence>
       </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.ul
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="grid grid-cols-2 px-6 pb-4 gap-2 border-t-2 pt-4 "
-          >
-            {links.map((link, i) => (
-              <li key={i}>
-                <NavLink
-                  to={link.path}
-                  onClick={() => setMenuOpen(false)} // bosilganda menyu yopilsin
-                  className={({ isActive }) =>
-                    `block text-white/90 font-medium tracking-wide transition-all duration-300 hover:text-white hover:scale-105 border p-0.5 rounded ${
-                      isActive ? "text-white font-bold" : ""
-                    }`
-                  }
-                >
-                  {link.name}
-                </NavLink>
-              </li>
-            ))}
-          </motion.ul>
-        )}
-      </AnimatePresence>
     </nav>
   );
 }

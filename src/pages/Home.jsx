@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { NavLink } from "react-router-dom";
 import { useTypewriter, Cursor } from "react-simple-typewriter";
 
 export default function Home() {
@@ -31,7 +30,6 @@ export default function Home() {
 
   const [currentMotivation, setCurrentMotivation] = useState(0);
 
-  // Change motivation every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentMotivation((prev) => (prev + 1) % motivations.length);
@@ -39,7 +37,7 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [motivations.length]);
 
-  // Typewriter matnlar
+  // Typewriter text
   const [text] = useTypewriter({
     words: [
       "Salomatlik Portaliga Xush Kelibsiz",
@@ -49,24 +47,24 @@ export default function Home() {
     loop: true,
     typeSpeed: 150,
     deleteSpeed: 60,
-    delaySpeed: 1000, // 7 sekund tursin
+    delaySpeed: 1000,
   });
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-r from-green-200 via-blue-100 to-purple-200 py-20 min-h-screen">
-      {/* Background animated blobs */}
+    <div className="relative overflow-hidden bg-gray-900 py-[90px] min-h-screen text-gray-200">
+      {/* Background blobs */}
       <motion.div
-        className="absolute w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30"
+        className="absolute w-96 h-96 bg-gray-700 rounded-full mix-blend-multiply filter blur-3xl opacity-20"
         animate={{ x: [0, 100, -100, 0], y: [0, 50, -50, 0] }}
         transition={{ duration: 20, repeat: Infinity, repeatType: "reverse" }}
       />
       <motion.div
-        className="absolute top-1/2 left-1/2 w-80 h-80 bg-green-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30"
+        className="absolute top-1/2 left-1/2 w-80 h-80 bg-gray-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20"
         animate={{ x: [0, -120, 120, 0], y: [0, -60, 60, 0] }}
         transition={{ duration: 25, repeat: Infinity, repeatType: "reverse" }}
       />
       <motion.div
-        className="absolute top-1/3 left-1/4 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30"
+        className="absolute top-1/3 left-1/4 w-72 h-72 bg-gray-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"
         animate={{ x: [0, 80, -80, 0], y: [0, 100, -100, 0] }}
         transition={{ duration: 30, repeat: Infinity, repeatType: "reverse" }}
       />
@@ -78,12 +76,12 @@ export default function Home() {
         transition={{ duration: 0.7 }}
         className="relative z-10 space-y-6 text-center"
       >
-        <h1 className="text-4xl font-extrabold text-green-700 md:text-5xl drop-shadow-lg">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-white drop-shadow-lg ">
           {text}
           <Cursor cursorStyle="_" />
         </h1>
         <motion.div
-          className="relative z-10 max-w-3xl p-8 mx-auto t shadow-2xl rounded-2xl bg-white/40 backdrop-blur-lg border border-white/30"
+          className="relative z-10 max-w-3xl p-8 mx-auto shadow-2xl rounded-2xl bg-gray-800/80 backdrop-blur-lg border border-gray-700"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
@@ -95,7 +93,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.8 }}
-              className="text-2xl font-medium text-center text-gray-800 drop-shadow-2xl"
+              className="text-2xl font-medium text-center text-gray-200"
             >
               {motivations[currentMotivation]}
             </motion.p>
@@ -105,15 +103,15 @@ export default function Home() {
 
       {/* Muammo */}
       <motion.div
-        className="relative z-10 max-w-3xl p-8 mx-auto mt-16 shadow-2xl rounded-2xl bg-white/50 backdrop-blur-lg border border-white/30"
+        className="relative z-10 max-w-3xl p-8 mx-auto mt-16 shadow-2xl rounded-2xl bg-gray-800/80 backdrop-blur-lg border border-gray-700"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="mb-4 text-3xl font-bold text-center text-red-600 drop-shadow-md">
+        <h2 className="mb-4 text-3xl font-bold text-center text-red-500 drop-shadow-md">
           ⚠️ Muammo
         </h2>
-        <p className="text-lg text-gray-800 text-center drop-shadow-lg">
+        <p className="text-lg text-gray-200 text-center drop-shadow-lg">
           Hozirgi kunda ko‘plab insonlar stress, noto‘g‘ri ovqatlanish va
           yetarli jismoniy faollik yo‘qligi tufayli sog‘lig‘ini yo‘qotmoqda.
         </p>
@@ -121,24 +119,20 @@ export default function Home() {
 
       {/* Bizning Yechim */}
       <motion.div
-        className="relative z-10 max-w-3xl p-8 mx-auto mt-12 shadow-2xl rounded-2xl bg-white/50 backdrop-blur-lg border border-white/30"
+        className="relative z-10 max-w-3xl p-8 mx-auto mt-12 shadow-2xl rounded-2xl bg-gray-800/80 backdrop-blur-lg border border-gray-700"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9 }}
       >
-        <h2 className="mb-4 text-3xl font-bold text-center text-green-700 drop-shadow-md">
+        <h2 className="mb-4 text-3xl font-bold text-center text-white drop-shadow-md">
           💡 Bizning Yechim
         </h2>
-        <p className="text-lg text-gray-800 text-center drop-shadow-lg">
+        <p className="text-lg text-gray-200 text-center drop-shadow-lg">
           Portalimiz orqali siz sog‘lom turmush tarzini shakllantirish,
           motivatsiya olish va hayotingizni ijobiy tomonga o‘zgartirish uchun
           barcha imkoniyatlarga ega bo‘lasiz.
         </p>
       </motion.div>
-
-      {/* Challenge & Motivation */}
-
-      {/* CTA Button */}
     </div>
   );
 }

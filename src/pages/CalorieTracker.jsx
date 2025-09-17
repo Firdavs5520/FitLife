@@ -80,8 +80,8 @@ export default function FoodPlanner() {
   return (
     <PageWrapper title="🍽 Ovqat rejalashtiruvchi">
       {!mealTime ? (
-        <div className="p-6 rounded-xl bg-white/30 backdrop-blur-md shadow-lg text-center">
-          <h2 className="mb-4 text-xl font-bold text-green-700">
+        <div className="p-6 rounded-xl bg-gray-900/50 backdrop-blur-md shadow-lg text-center">
+          <h2 className="mb-4 text-xl font-bold text-white">
             Qaysi paytda ovqatlanasiz?
           </h2>
           <div className="flex flex-col gap-3 md:flex-row md:justify-center">
@@ -89,7 +89,7 @@ export default function FoodPlanner() {
               <button
                 key={time}
                 onClick={() => setMealTime(time)}
-                className="px-6 py-3 font-semibold text-white bg-green-500 rounded-xl hover:bg-green-600 transition"
+                className="px-6 py-3 font-semibold text-white bg-gray-800 rounded-xl hover:bg-gray-700 transition"
               >
                 {time}
               </button>
@@ -104,9 +104,9 @@ export default function FoodPlanner() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Ovqat qidiring..."
-              className="flex-grow p-3 rounded-xl bg-white/30 backdrop-blur-md border-2 focus:ring-green-400 transition"
+              className="flex-grow p-3 rounded-xl bg-gray-900/50 backdrop-blur-md border border-gray-700 text-white focus:ring-gray-400 transition"
             />
-            <label className="flex items-center gap-2">
+            <label className="flex items-center gap-2 text-white">
               <input
                 type="checkbox"
                 checked={showFastFood}
@@ -121,10 +121,10 @@ export default function FoodPlanner() {
               <button
                 key={item.id}
                 onClick={() => toggleFood(item)}
-                className={`p-4 rounded-xl shadow-md transition text-left ${
+                className={`p-4 rounded-xl shadow-md transition text-left text-white ${
                   selectedFood.includes(item)
-                    ? "bg-green-400/50"
-                    : "bg-white/30 backdrop-blur-md"
+                    ? "bg-gray-700"
+                    : "bg-gray-900/50 backdrop-blur-md"
                 }`}
               >
                 {item.name} ({item.calories} cal)
@@ -133,18 +133,16 @@ export default function FoodPlanner() {
           </div>
 
           <div className="mt-4">
-            <h3 className="text-green-700 font-semibold mb-2">
-              Dessert tanlang:
-            </h3>
+            <h3 className="text-white font-semibold mb-2">Dessert tanlang:</h3>
             <div className="flex gap-3 flex-wrap">
               {menuData.desserts.map((d) => (
                 <button
                   key={d.id}
                   onClick={() => setSelectedDessert(d)}
-                  className={`px-4 py-2 rounded-xl shadow-md transition ${
+                  className={`px-4 py-2 rounded-xl shadow-md transition text-white ${
                     selectedDessert === d
-                      ? "bg-pink-400 text-white"
-                      : "bg-white/30 backdrop-blur-md"
+                      ? "bg-gray-700"
+                      : "bg-gray-900/50 backdrop-blur-md"
                   }`}
                 >
                   {d.name} ({d.calories} cal)
@@ -154,18 +152,16 @@ export default function FoodPlanner() {
           </div>
 
           <div className="mt-4">
-            <h3 className="text-green-700 font-semibold mb-2">
-              Ichimlik tanlang:
-            </h3>
+            <h3 className="text-white font-semibold mb-2">Ichimlik tanlang:</h3>
             <div className="flex gap-3 flex-wrap">
               {menuData.drinks.map((d) => (
                 <button
                   key={d.id}
                   onClick={() => setSelectedDrink(d)}
-                  className={`px-4 py-2 rounded-xl shadow-md transition ${
+                  className={`px-4 py-2 rounded-xl shadow-md transition text-white ${
                     selectedDrink === d
-                      ? "bg-blue-400 text-white"
-                      : "bg-white/30 backdrop-blur-md"
+                      ? "bg-gray-700"
+                      : "bg-gray-900/50 backdrop-blur-md"
                   }`}
                 >
                   {d.name} ({d.calories} cal)
@@ -176,23 +172,21 @@ export default function FoodPlanner() {
 
           <button
             onClick={calculateCalories}
-            className="mt-6 w-full py-3 font-bold text-white bg-gradient-to-r from-green-500 to-blue-500 rounded-xl shadow-lg hover:scale-105 transition"
+            className="mt-6 w-full py-3 font-bold text-white bg-gray-800 rounded-xl shadow-lg hover:bg-gray-700 transition"
           >
             Jami kaloriya hisoblash
           </button>
 
           {totalCalories > 0 && (
-            <div className="mt-4 p-4 rounded-xl shadow-lg bg-white/30 backdrop-blur-md text-center">
-              <h3 className="text-green-700 font-bold">
-                Sizning jami kaloriyangiz:
-              </h3>
-              <p className="text-gray-800 text-lg">{totalCalories} cal</p>
+            <div className="mt-4 p-4 rounded-xl shadow-lg bg-gray-900/50 backdrop-blur-md text-center text-white">
+              <h3 className="font-bold">Sizning jami kaloriyangiz:</h3>
+              <p className="text-lg">{totalCalories} cal</p>
             </div>
           )}
 
           <button
             onClick={resetAll}
-            className="mt-4 w-full py-2 font-semibold bg-red-500 rounded-xl text-white hover:bg-red-600 transition"
+            className="mt-4 w-full py-2 font-semibold bg-gray-700 rounded-xl text-white hover:bg-gray-600 transition"
           >
             Qayta tanlash
           </button>

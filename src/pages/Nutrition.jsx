@@ -47,39 +47,28 @@ export default function Nutrition() {
   ];
 
   return (
-    <div className="pt-4  ">
-      <PageWrapper title="🥗 Sog‘lom Ovqatlanish">
-        <div className=" p-4  flex flex-col gap-4">
-          {weeklyMeals.map((day, idx) => (
-            <div
-              key={idx}
-              className="p-4 shadow-lg bg-white/30 backdrop-blur-md rounded-2xl transition hover:scale-105 duration-300"
-            >
-              <h2 className="mb-3 text-xl font-bold text-green-700">
-                {day.day}
-              </h2>
-              <div className="space-y-2">
-                <p>
-                  <span className="font-semibold text-blue-600">Ertalab:</span>{" "}
-                  {day.breakfast}
-                </p>
-                <p>
-                  <span className="font-semibold text-orange-500">
-                    Tushlik:
-                  </span>{" "}
-                  {day.lunch}
-                </p>
-                <p>
-                  <span className="font-semibold text-purple-600">
-                    Kechqurun:
-                  </span>{" "}
-                  {day.dinner}
-                </p>
-              </div>
+    <PageWrapper title="🥗 Sog‘lom Ovqatlanish">
+      <div className="p-4 flex flex-col gap-4">
+        {weeklyMeals.map((day, idx) => (
+          <div
+            key={idx}
+            className="p-4 shadow-md bg-gray-800/40 backdrop-blur-md rounded-2xl transition hover:scale-105 duration-300"
+          >
+            <h2 className="mb-3 text-xl font-bold text-white">{day.day}</h2>
+            <div className="space-y-2 text-gray-200">
+              <p>
+                <span className="font-semibold">Ertalab:</span> {day.breakfast}
+              </p>
+              <p>
+                <span className="font-semibold">Tushlik:</span> {day.lunch}
+              </p>
+              <p>
+                <span className="font-semibold">Kechqurun:</span> {day.dinner}
+              </p>
             </div>
-          ))}
-        </div>
-      </PageWrapper>
-    </div>
+          </div>
+        ))}
+      </div>
+    </PageWrapper>
   );
 }
