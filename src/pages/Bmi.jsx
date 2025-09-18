@@ -8,6 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { TrashIcon, CalculatorIcon } from "@heroicons/react/24/solid";
 import PageWrapper from "../components/PageWrapper";
 
 function Bmi() {
@@ -18,20 +19,25 @@ function Bmi() {
   const [advice, setAdvice] = useState("");
   const [history, setHistory] = useState([]);
 
-  // LocalStorage dan o‘qish
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("bmiHistory") || "[]");
     setHistory(stored);
   }, []);
 
+  const statusColor = {
+    "Ozish (Ozg'inlik)": "bg-blue-400",
+    "Normal (Sog‘lom vazn)": "bg-green-400",
+    "Ortiqcha vazn (Semirish)": "bg-yellow-400",
+    "Semizlik (Jiddiy sog'liq xavfi)": "bg-red-500",
+  };
+
   const calculateBmi = () => {
     if (!height || !weight) {
-      setStatus("⚠️ Iltimos, bo‘y va vazn kiriting!");
+      setStatus("Iltimos, bo‘y va vazn kiriting!");
       setBmi(null);
       setAdvice("");
       return;
     }
-
     const h = height / 100;
     const result = (weight / (h * h)).toFixed(1);
     setBmi(result);
@@ -41,16 +47,16 @@ function Bmi() {
 
     if (result < 18.5) {
       newStatus = "Ozish (Ozg'inlik)";
-      newAdvice = "🥗 Ko‘proq to‘yimli ovqatlar va oqsil qabul qiling!";
+      newAdvice = "Ko‘proq to‘yimli ovqatlar va oqsil qabul qiling!";
     } else if (result < 24.9) {
       newStatus = "Normal (Sog‘lom vazn)";
-      newAdvice = "👍 Ajoyib! Sog‘lom turmush tarzini davom ettiring.";
+      newAdvice = "Ajoyib! Sog‘lom turmush tarzini davom ettiring.";
     } else if (result < 29.9) {
       newStatus = "Ortiqcha vazn (Semirish)";
-      newAdvice = "🏃‍♂️ Faollikni oshiring va kaloriya nazorat qiling.";
+      newAdvice = "Faollikni oshiring va kaloriya nazorat qiling.";
     } else {
       newStatus = "Semizlik (Jiddiy sog'liq xavfi)";
-      newAdvice = "⚠️ Shifokor bilan maslahatlashish tavsiya etiladi.";
+      newAdvice = "Shifokor bilan maslahatlashish tavsiya etiladi.";
     }
 
     setStatus(newStatus);
@@ -70,6 +76,7 @@ function Bmi() {
 
   return (
     <PageWrapper title="BMI Kalkulyatori">
+      {/* Inputs */}
       <div className="mb-4">
         <label className="text-white font-semibold">Bo‘yingiz (sm)</label>
         <input
@@ -80,7 +87,6 @@ function Bmi() {
           className="w-full mt-2 p-3 rounded-xl bg-gray-900/50 backdrop-blur-md border border-gray-700 text-white focus:ring-gray-400 transition"
         />
       </div>
-
       <div className="mb-6">
         <label className="text-white font-semibold">Vazningiz (kg)</label>
         <input
@@ -92,13 +98,14 @@ function Bmi() {
         />
       </div>
 
+      {/* Buttons */}
       <motion.button
         onClick={calculateBmi}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="w-full py-3 mb-4 font-bold text-white bg-gray-800 rounded-xl shadow-lg hover:bg-gray-700"
+        className="w-full py-3 mb-4 font-bold text-white bg-gray-800 rounded-xl shadow-lg hover:bg-gray-700 flex items-center justify-center gap-2"
       >
-        Hisoblash
+        <CalculatorIcon className="w-5 h-5" /> Hisoblash
       </motion.button>
 
       {bmi && (
@@ -107,44 +114,60 @@ function Bmi() {
             <p className="text-xl font-bold text-white">
               Sizning BMI: <span className="text-gray-300">{bmi}</span>
             </p>
-            <p className="font-semibold text-gray-200">{status}</p>
+            <p className={`font-semibold text-white`}>{status}</p>
           </div>
-          <p className="mb-2 text-gray-300">{advice}</p>
+
+          {/* Progress Bar */}
+          <div className="w-full h-3 bg-gray-700 rounded-full mt-2">
+            <div
+              className={`h-3 rounded-full ${statusColor[status]}`}
+              style={{ width: `${Math.min((bmi / 40) * 100, 100)}%` }}
+            ></div>
+          </div>
+
+          <p className="mb-2 mt-2 text-gray-300">{advice}</p>
         </div>
       )}
 
+      {/* History */}
       {history.length > 0 && (
         <div className="p-4 rounded-xl bg-gray-900/40 backdrop-blur-md shadow-lg border border-gray-700">
           <div className="flex justify-between mb-2">
             <h3 className="font-bold text-white">BMI Tarixi</h3>
             <button
               onClick={clearHistory}
-              className="px-2 py-1 text-sm bg-gray-700/70 rounded-md text-white hover:bg-gray-600/80"
+              className="px-2 py-1 text-sm bg-gray-700/70 rounded-md text-white hover:bg-gray-600/80 flex items-center gap-1"
             >
-              Tozalash
+              <TrashIcon className="w-4 h-4" /> Tozalash
             </button>
           </div>
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={history}>
-              <XAxis dataKey="date" stroke="#ccc" />
-              <YAxis domain={[0, 40]} stroke="#ccc" />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#1f1f1f",
-                  borderRadius: "8px",
-                  border: "1px solid #555",
-                }}
-                itemStyle={{ color: "#fff" }}
-              />
-              <Line
-                type="monotone"
-                dataKey="bmi"
-                stroke="#fff"
-                strokeWidth={3}
-                dot={{ r: 4, fill: "#fff" }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <ResponsiveContainer width="100%" height={200}>
+              <LineChart data={history}>
+                <XAxis dataKey="date" stroke="#ccc" />
+                <YAxis domain={[0, 40]} stroke="#ccc" />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#1f1f1f",
+                    borderRadius: "8px",
+                    border: "1px solid #555",
+                  }}
+                  itemStyle={{ color: "#fff" }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="bmi"
+                  stroke="#fff"
+                  strokeWidth={3}
+                  dot={{ r: 4, fill: "#fff" }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </motion.div>
         </div>
       )}
     </PageWrapper>

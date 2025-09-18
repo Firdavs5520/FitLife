@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import PageWrapper from "../components/PageWrapper";
 import { v4 as uuidv4 } from "uuid"; // npm install uuid
+import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { FaBed, FaTint } from "react-icons/fa";
 
 export default function Planner() {
   const [time, setTime] = useState(new Date());
@@ -13,47 +15,39 @@ export default function Planner() {
     water: false,
   });
 
-  // LocalStorage dan yuklash
   useEffect(() => {
     const savedTasks = localStorage.getItem("plannerTasks");
     if (savedTasks) setTasks(JSON.parse(savedTasks));
   }, []);
 
-  // LocalStorage ga yozish
   useEffect(() => {
     localStorage.setItem("plannerTasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  // Vaqtni yangilash
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
 
-  // Alertlarni tekshirish
   useEffect(() => {
     const hour = time.getHours();
     const minute = time.getMinutes();
 
-    // Sleep Alert 21:00 dan keyin
     if (hour >= 21 && !alerts.sleep) {
       setAlerts((prev) => ({ ...prev, sleep: true }));
     }
 
-    // Water Alert 08:00–20:00 va har daqiqa
     if (hour >= 8 && hour <= 20 && minute % 1 === 0) {
       setAlerts((prev) => ({ ...prev, water: true }));
     }
   }, [time, alerts.sleep]);
 
-  // Task qo‘shish
   const addTask = () => {
     if (!input.trim()) return;
     setTasks((prev) => [...prev, { id: uuidv4(), text: input, done: false }]);
     setInput("");
   };
 
-  // Task bajarilgan/bajarilmagan
   const toggleDone = (id) => {
     setTasks((prev) => {
       const newTasks = prev.map((t) =>
@@ -70,7 +64,6 @@ export default function Planner() {
     });
   };
 
-  // Taskni o‘chirish
   const deleteTask = (id) => {
     setTasks((prev) => prev.filter((t) => t.id !== id));
   };
@@ -92,9 +85,9 @@ export default function Planner() {
         />
         <button
           onClick={addTask}
-          className="px-4 py-2 bg-green-600 text-white rounded-xl shadow hover:bg-green-700"
+          className="flex items-center justify-center px-4 py-2 bg-green-600 text-white rounded-xl shadow hover:bg-green-700"
         >
-          +
+          <PlusIcon className="w-5 h-5" />
         </button>
       </div>
 
@@ -119,9 +112,9 @@ export default function Planner() {
               </span>
               <button
                 onClick={() => deleteTask(task.id)}
-                className="ml-3 text-red-500 hover:text-red-700 font-bold"
+                className="ml-3 text-red-500 hover:text-red-700"
               >
-                ✖
+                <XMarkIcon className="w-5 h-5" />
               </button>
             </motion.li>
           ))}
@@ -148,12 +141,12 @@ export default function Planner() {
             exit={{ opacity: 0, x: 50 }}
             className="fixed bottom-20 right-5 z-50 p-2 text-white shadow-lg rounded-xl bg-purple-600/80 backdrop-blur-md flex items-center gap-2"
           >
-            🛌 Uxlash vaqti keldi!
+            <FaBed className="w-5 h-5" /> Uxlash vaqti keldi!
             <button
               onClick={() => setAlerts((prev) => ({ ...prev, sleep: false }))}
               className="ml-2 font-bold"
             >
-              ✖
+              <XMarkIcon className="w-5 h-5" />
             </button>
           </motion.div>
         )}
@@ -165,12 +158,12 @@ export default function Planner() {
             exit={{ opacity: 0, x: 50 }}
             className="fixed bottom-32 right-5 z-50 p-2 text-white shadow-lg rounded-xl bg-blue-500/80 backdrop-blur-md flex items-center gap-2"
           >
-            💧 Suv ichdingizmi?
+            <FaTint className="w-5 h-5" /> Suv ichdingizmi?
             <button
               onClick={() => setAlerts((prev) => ({ ...prev, water: false }))}
               className="ml-2 font-bold"
             >
-              ✖
+              <XMarkIcon className="w-5 h-5" />
             </button>
           </motion.div>
         )}

@@ -16,6 +16,7 @@ function App() {
     <Router>
       <div className="flex flex-col min-h-screen font-golos">
         <Navbar />
+
         <main className=" ">
           <Routes>
             <Route path="/" element={<Home />} />

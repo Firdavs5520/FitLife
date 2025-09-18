@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import PageWrapper from "../components/PageWrapper";
 import { motion } from "framer-motion";
+import { ClockIcon, ArrowPathIcon, StopIcon } from "@heroicons/react/24/solid";
 
 export default function Mental() {
   const [meditationTime, setMeditationTime] = useState(
@@ -18,21 +19,20 @@ export default function Mental() {
 
   const intervalRef = useRef(null);
 
-  useEffect(() => {
-    localStorage.setItem("meditationTime", meditationTime);
-  }, [meditationTime]);
-  useEffect(() => {
-    localStorage.setItem("isMeditating", JSON.stringify(isMeditating));
-  }, [isMeditating]);
-  useEffect(() => {
-    localStorage.setItem("stressLevel", stressLevel);
-  }, [stressLevel]);
-  useEffect(() => {
-    localStorage.setItem("advice", advice);
-  }, [advice]);
-  useEffect(() => {
-    return () => clearInterval(intervalRef.current);
-  }, []);
+  useEffect(
+    () => localStorage.setItem("meditationTime", meditationTime),
+    [meditationTime]
+  );
+  useEffect(
+    () => localStorage.setItem("isMeditating", JSON.stringify(isMeditating)),
+    [isMeditating]
+  );
+  useEffect(
+    () => localStorage.setItem("stressLevel", stressLevel),
+    [stressLevel]
+  );
+  useEffect(() => localStorage.setItem("advice", advice), [advice]);
+  useEffect(() => () => clearInterval(intervalRef.current), []);
 
   const startMeditation = () => {
     if (isMeditating) return;
@@ -50,6 +50,17 @@ export default function Mental() {
     }, 1000);
   };
 
+  const stopMeditation = () => {
+    clearInterval(intervalRef.current);
+    setIsMeditating(false);
+  };
+
+  const resetMeditation = () => {
+    clearInterval(intervalRef.current);
+    setIsMeditating(false);
+    setMeditationTime(0);
+  };
+
   const handleStressSurvey = (level) => {
     setStressLevel(level);
     if (level <= 3) setAdvice("Siz nisbatan tinch ekansiz, davom eting!");
@@ -60,21 +71,25 @@ export default function Mental() {
 
   const tips = [
     {
-      icon: "🕯️",
+      icon: <ClockIcon className="w-5 h-5 inline mr-1" />,
       text: "Meditatsiya — har kuni 10 daqiqa",
       color: "bg-gray-800/50",
     },
     {
-      icon: "📖",
+      icon: <ArrowPathIcon className="w-5 h-5 inline mr-1" />,
       text: "Kitob o‘qish — stressni kamaytiradi",
       color: "bg-gray-700/50",
     },
-    { icon: "🌿", text: "Tabiatda sayr qilish", color: "bg-gray-800/50" },
+    {
+      icon: <StopIcon className="w-5 h-5 inline mr-1" />,
+      text: "Tabiatda sayr qilish",
+      color: "bg-gray-800/50",
+    },
   ];
 
   return (
     <PageWrapper title="🧘 Ruhiy Salomatlik">
-      <div className="gap-2 text-white p-4 rounded-lg flex flex-col min-h-[550px]">
+      <div className="gap-4 text-white p-4 rounded-lg flex flex-col min-h-[550px]">
         {/* Tavsiyalar */}
         {tips.map((tip, idx) => (
           <motion.div
@@ -89,19 +104,36 @@ export default function Mental() {
         ))}
 
         {/* Meditatsiya Timer */}
-        <div className="p-4 rounded-lg shadow-md bg-gray-900/50 backdrop-blur-md">
-          <h3 className="mb-2 font-semibold text-white">Meditatsiya Timer</h3>
-          <p className="text-gray-200">
+        <div className="p-4 rounded-lg shadow-md bg-gray-900/50 backdrop-blur-md flex flex-col gap-2">
+          <h3 className="mb-2 font-semibold text-white flex items-center">
+            <ClockIcon className="w-6 h-6 mr-2" /> Meditatsiya Timer
+          </h3>
+          <p className="text-gray-200 text-lg">
             O‘tkazilgan vaqt: {Math.floor(meditationTime / 60)}:
-            {("0" + (meditationTime % 60)).slice(-2)} min
+            {("0" + (meditationTime % 60)).slice(-2)}
           </p>
-          <button
-            onClick={startMeditation}
-            disabled={isMeditating}
-            className="px-4 py-2 mt-2 font-semibold text-white bg-gray-800 rounded-lg hover:bg-gray-700 disabled:opacity-50"
-          >
-            {isMeditating ? "Meditatsiya davom etmoqda..." : "Boshlash"}
-          </button>
+          <div className="flex gap-2 mt-2">
+            <button
+              onClick={startMeditation}
+              disabled={isMeditating}
+              className="px-4 py-2 font-semibold text-white bg-green-600 rounded-lg hover:bg-green-500 disabled:opacity-50"
+            >
+              Boshlash
+            </button>
+            <button
+              onClick={stopMeditation}
+              disabled={!isMeditating}
+              className="px-4 py-2 font-semibold text-white bg-yellow-600 rounded-lg hover:bg-yellow-500 disabled:opacity-50"
+            >
+              To‘xtatish
+            </button>
+            <button
+              onClick={resetMeditation}
+              className="px-4 py-2 font-semibold text-white bg-red-600 rounded-lg hover:bg-red-500"
+            >
+              <ArrowPathIcon className="w-5 h-5 inline mr-1" /> Reset
+            </button>
+          </div>
         </div>
 
         {/* Stress Survey */}
@@ -120,9 +152,7 @@ export default function Mental() {
               </button>
             ))}
           </div>
-          {advice && (
-            <p className="mt-2 text-gray-300 font-medium">💡 {advice}</p>
-          )}
+          {advice && <p className="mt-2 text-gray-300 font-medium">{advice}</p>}
         </div>
       </div>
     </PageWrapper>
